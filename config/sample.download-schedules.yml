@@ -1,0 +1,27 @@
+- schedule:
+    name: GeoIP2-Country
+    description: "GeoIP2-Country weekly"
+    rate: cron(20 3 ? * WED *)
+    input:
+      editionId: GeoIP2-Country
+- schedule:
+    name: GeoIP2-City
+    description: "GeoIP2-City weekly"
+    rate: cron(50 3 ? * WED *)
+    enabled: true
+    input:
+      editionId: GeoIP2-City
+- schedule:
+    name: GeoLite2-City
+    description: "GeoLite2-City monthly"
+    rate: cron(10 3 4 * ? *)
+    enabled: true
+    input:
+      editionId: GeoLite2-City
+- schedule:
+    name: GeoLite2-ASN
+    description: "GeoLite2-ASN monthly"
+    rate: cron(10 4 4 * ? *)
+    enabled: true
+    input:
+      editionId: GeoLite2-ASN

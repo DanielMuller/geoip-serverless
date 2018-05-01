@@ -11,3 +11,6 @@ jspm_packages
 
 stages/*.yml
 !stages/sample.*.yml
+config/*.yml
+!config/sample.*.yml
+!config/iamRoleStatements.yml

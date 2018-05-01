@@ -1,0 +1,14 @@
+handler: services/prepare.handler
+name: ${self:service}-prepare
+memorySize: 2048
+timeout: 300
+
+events:
+  - s3:
+      bucket: ${self:custom.stage.dataBucket}
+      event: s3:ObjectCreated:*
+      rules:
+        - suffix: manifest.json
+properties:
+  logGroup:
+    RetentionInDays: ${self:custom.stage.lambda.logRetention}

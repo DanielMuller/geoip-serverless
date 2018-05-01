@@ -1,0 +1,38 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.0",
+      "eventSource": "aws:s3",
+      "awsRegion": "ap-southeast-1",
+      "eventTime": "2018-04-24T18:23:32.013Z",
+      "eventName": "ObjectCreated:Put",
+      "userIdentity": {
+        "principalId": "AWS:AROAIHK26N57RLRPJDKDW:aws-sdk-js-1524594211025"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "192.168.1.2"
+      },
+      "responseElements": {
+        "x-amz-request-id": "B28D6BB66DAEC5DF",
+        "x-amz-id-2": "jhSp22gAteZS5wbB4faJXmS67Na37LaKctbTXNxCyu9e5A/pMLbi1MFN1l+0DJMOHgnwHCody3g="
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "ac818738-464d-4428-993a-407b27b34995",
+        "bucket": {
+          "name": "myBucket",
+          "ownerIdentity": {
+            "principalId": "A3HCYARK3OR7UC"
+          },
+          "arn": "arn:aws:s3:::mydevbucket"
+        },
+        "object": {
+          "key": "src/GeoLite2-City/manifest.json",
+          "size": 113,
+          "eTag": "5ee5cde682e3959fdf997463296f9265",
+          "sequencer": "005ADF7623F4EC519C"
+        }
+      }
+    }
+  ]
+}

@@ -31,6 +31,9 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "ip": "^1.1.5",
+    "csvjson": "^5.0.0",
+    "csvtojson": "^1.1.9",
     "adm-zip": "^0.4.9",
     "rimraf": "^2.6.2"
   }

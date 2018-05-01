@@ -1,0 +1,6 @@
+profile: prod
+region: ap-southeast-1
+lambda:
+  memorySize: 128
+  timeout: 10
+  logRetention: "30"

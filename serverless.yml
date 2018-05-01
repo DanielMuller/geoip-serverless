@@ -1,0 +1,29 @@
+service: geoip-serverless
+frameworkVersion: ">=1.26.1 <2.0.0"
+
+custom:
+  stage: ${file(stages/${opt:stage, self:provider.stage}.yml)}
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
+
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: ${opt:region, self:custom.stage.region}
+  profile: ${self:custom.stage.profile}
+  iamRoleStatements: ${file(config/iamRoleStatements.yml)}
+  deploymentBucket:
+    name: com.serverless.${self:custom.stage.profile}.${self:provider.region}.deploys
+
+functions: ${file(lib/config.js):functions}
+resources:
+  Resources: ${file(lib/config.js):resources}

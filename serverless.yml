@@ -20,9 +20,16 @@ provider:
   stage: dev
   region: ${opt:region, self:custom.stage.region}
   profile: ${self:custom.stage.profile}
+  memorySize: ${self:custom.stage.lambda.memorySize}
+  timeout: ${self:custom.stage.lambda.timeout}
   iamRoleStatements: ${file(config/iamRoleStatements.yml)}
   deploymentBucket:
     name: com.serverless.${self:custom.stage.profile}.${self:provider.region}.deploys
+  environment:
+    ssmMaxmindToken: ${self:custom.stage.ssmMaxmindTokenName}
+    locale: ${self:custom.stage.locale}
+    dataBucket: ${self:custom.stage.dataBucket}
+    dataPath: ${self:custom.stage.dataPath}
 
 functions: ${file(lib/config.js):functions}
 resources:

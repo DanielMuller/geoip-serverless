@@ -1,0 +1,7 @@
+handler: services/download.handler
+name: ${self:service}-download
+memorySize: 1024
+timeout: 300
+properties:
+  logGroup:
+    RetentionInDays: ${self:custom.stage.lambda.logRetention}

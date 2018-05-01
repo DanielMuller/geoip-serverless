@@ -1,6 +1,10 @@
 profile: prod
 region: ap-southeast-1
+dataBucket: myprodbucket
+dataPath: ''
 lambda:
   memorySize: 128
   timeout: 10
   logRetention: "30"
+locale: en
+ssmMaxmindTokenName: maxmindToken

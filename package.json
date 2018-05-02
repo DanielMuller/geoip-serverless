@@ -14,10 +14,6 @@
   "license": "ISC",
   "devDependencies": {
     "aws-sdk": "^2.226.1",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-source-map-support": "^2.0.1",
-    "babel-preset-env": "^1.6.1",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.11.0",
@@ -25,10 +21,7 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
     "js-yaml": "^3.11.0",
-    "lodash": "^4.17.5",
-    "serverless-webpack": "^5.1.1",
-    "webpack": "^4.6.0",
-    "webpack-node-externals": "^1.7.2"
+    "lodash": "^4.17.5"
   },
   "dependencies": {
     "ip": "^1.1.5",

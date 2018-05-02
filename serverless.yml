@@ -3,16 +3,11 @@ frameworkVersion: ">=1.26.1 <2.0.0"
 
 custom:
   stage: ${file(stages/${opt:stage, self:provider.stage}.yml)}
-  webpack:
-    includeModules:
-      forceExclude:
-        - aws-sdk
-
-plugins:
-  - serverless-webpack
 
 package:
   individually: true
+  exclude:
+    - "*/**"
 
 provider:
   name: aws

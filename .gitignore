@@ -14,3 +14,30 @@ stages/*.yml
 config/*.yml
 !config/sample.*.yml
 !config/iamRoleStatements.yml
+
+# Python
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+lib/*
+!lib/config.js
+*.egg-info/
+.installed.cfg
+*.egg
+__pycache__
+bin/
+include/
+share/
+pip-selfcheck.json
+
+# Apple
+.DS_Store

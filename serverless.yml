@@ -3,7 +3,17 @@ frameworkVersion: ">=1.26.1 <2.0.0"
 
 custom:
   stage: ${file(stages/${opt:stage, self:provider.stage}.yml)}
+  apiCloudFront:
+    domain: ${self:custom.stage.domainName}
+    certificate: ${self:custom.stage.certificateArn}
+    compress: true
+    querystring: none
+    cookies: none
+    headers:
+      - x-api-key
 
+plugins:
+  - serverless-api-cloudfront
 package:
   individually: true
   exclude:

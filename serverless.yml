@@ -25,6 +25,11 @@ provider:
     locale: ${self:custom.stage.locale}
     dataBucket: ${self:custom.stage.dataBucket}
     dataPath: ${self:custom.stage.dataPath}
+    dbCity: ${self:custom.stage.dbMapping.city}
+    dbCountry: ${self:custom.stage.dbMapping.country}
+    dbAsn: ${self:custom.stage.dbMapping.asn}
+  apiKeys: ${file(config/apiusage.yml):apiKeys}
+  usagePlan: ${file(config/apiusage.yml):usagePlan}
 
 functions: ${file(lib/config.js):functions}
 resources:

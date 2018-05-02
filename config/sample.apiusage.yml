@@ -1,0 +1,10 @@
+apiKeys:
+  - myFirstKey
+  - mySecondKey
+usagePlan:
+  quota:
+    limit: 200
+    period: DAY
+  throttle:
+    burstLimit: 200
+    rateLimit: 100

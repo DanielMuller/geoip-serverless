@@ -1,0 +1,21 @@
+handler: services/getipinfo.handler
+name: ${self:service}-getIpInfo
+memorySize: 128
+timeout: 10
+runtime: python3.6
+package:
+  include:
+    - "services/getipinfo.py"
+events:
+  - http:
+      path: /{ip}
+      method: get
+      private: true
+  - http:
+      path: /{ip}/{dbType}
+      method: get
+      private: true
+
+properties:
+  logGroup:
+    RetentionInDays: ${self:custom.stage.lambda.logRetention}

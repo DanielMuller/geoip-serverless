@@ -8,3 +8,7 @@ lambda:
   logRetention: "30"
 locale: en
 ssmMaxmindTokenName: maxmindToken
+dbMapping:
+  city: GeoLite2-City
+  country: GeoLite2-Country
+  asn: GeoLite2-ASN

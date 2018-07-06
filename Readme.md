@@ -13,13 +13,13 @@ This project provides a cost effective serverless GeoIP service, leveraging seve
 ## Usage
 *Combined City and ASN*
 ```
-curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/8.8.8.8
+curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ipv4/8.8.8.8
 ```
 *Specific database*
 ```
-curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/8.8.8.8/city
-curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/8.8.8.8/country
-curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/8.8.8.8/asn
+curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ipv4/8.8.8.8/city
+curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ipv4/8.8.8.8/country
+curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ipv4/8.8.8.8/asn
 ```
 ## Install
 A working [serverless.com](https://serverless.com), nvm, python, aws-cli is needed.

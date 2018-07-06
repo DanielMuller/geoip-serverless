@@ -8,11 +8,11 @@ package:
     - "services/getipinfo.py"
 events:
   - http:
-      path: /{ip}
+      path: /ipv4/{ip}
       method: get
       private: true
   - http:
-      path: /{ip}/{dbType}
+      path: /ipv4/{ip}/{dbType}
       method: get
       private: true
 

@@ -314,7 +314,7 @@ const upload = (file, key) => {
     Key: key,
     Body: stream,
     ContentType: 'application/x-gzip',
-    StorageClass: 'ONEZONE_IA'
+    StorageClass: 'STANDARD'
   }
   return s3.upload(params).promise().then((data) => {
     return data.Key

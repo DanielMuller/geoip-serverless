@@ -61,7 +61,7 @@ module.exports.handler = async (event, context, callback) => {
             Body: JSON.stringify(files, null, 2),
             Key: key,
             ContentType: 'application/json',
-            StorageClass: 'ONEZONE_IA'
+            StorageClass: 'STANDARD'
           }
           s3.putObject(params).promise().then((data) => {
             console.log('manifest uploaded')
@@ -90,7 +90,7 @@ const upload = (file, key) => {
     Key: gzkey,
     Body: body,
     ContentType: 'application/x-gzip',
-    StorageClass: 'ONEZONE_IA'
+    StorageClass: 'STANDARD'
   }
   return s3.upload(params).promise().then((data) => {
     return data.Key

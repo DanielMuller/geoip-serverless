@@ -13,22 +13,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "aws-sdk": "^2.226.1",
+    "aws-sdk": "^2.270.1",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.0.1",
-    "js-yaml": "^3.11.0",
+    "js-yaml": "^3.12.0",
     "lodash": "^4.17.5",
     "serverless-api-cloudfront": "^0.9.4"
   },
   "dependencies": {
-    "ip": "^1.1.5",
+    "adm-zip": "^0.4.11",
     "csvjson": "^5.0.0",
-    "csvtojson": "^1.1.9",
-    "adm-zip": "^0.4.9",
+    "csvtojson": "^1.1.12",
+    "ip": "^1.1.5",
     "rimraf": "^2.6.2"
   }
 }

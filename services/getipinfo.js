@@ -56,7 +56,7 @@ module.exports.handler = async (event) => {
     } catch (error) {
       dbPath = ''
     }
-    if (dbPath === '') {
+    if (dbPath === '' || dbPath === undefined) {
       return invalidContent('Invalid database')
     }
     data = await getEntry(networkHead, ipLong, dbPath)

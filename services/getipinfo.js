@@ -150,13 +150,16 @@ const s3Select = async (params) => {
 }
 
 const invalidContent = (reason, code = 400) => {
-  return {
+  let body = {
+    message: reason
+  }
+  let response = {
     statusCode: code,
-    body: {
-      message: reason
-    },
+    body: JSON.stringify(body),
     headers: {
       'Cache-Control': 'max-age=60'
     }
   }
+  console.log('Response:', JSON.stringify(response, null, 2))
+  return response
 }

@@ -1,6 +1,6 @@
 handler: services/prepare.handler
 name: ${self:service}-prepare
-memorySize: 2048
+memorySize: 2496
 timeout: 300
 events:
   - s3:

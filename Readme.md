@@ -22,7 +22,7 @@ curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ipv4/8.8.8.8/country
 curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ipv4/8.8.8.8/asn
 ```
 ## Install
-A working [serverless.com](https://serverless.com), nvm, python, aws-cli is needed.
+A working [serverless.com](https://serverless.com), nvm, aws-cli is needed.
 ```
 git clone https://github.com/Spuul/geoip-serverless
 cd geoip-serverless
@@ -50,9 +50,6 @@ git clone https://github.com/Spuul/geoip-serverless
 cd geoip-serverless
 nvm use
 npm i
-virtualenv -p python3 .
-source bin/activate
-pip install boto3
 ```
 
 ## Functions

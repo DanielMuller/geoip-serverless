@@ -2,10 +2,7 @@ handler: services/getipinfo.handler
 name: ${self:service}-getIpInfo
 memorySize: 128
 timeout: 10
-runtime: python3.6
-package:
-  include:
-    - "services/getipinfo.py"
+
 events:
   - http:
       path: /ipv4/{ip}

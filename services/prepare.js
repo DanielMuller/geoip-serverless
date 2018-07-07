@@ -36,9 +36,19 @@ module.exports.handler = async (event, context) => {
     let error = new Error('No range file in ' + dbManifest)
     return Promise.reject(error)
   }
+  let uploads = []
   let locationData = null
   if (dbInfo.geonames) {
     locationData = await getLocationData(dbInfo.geonames)
+    if (dbInfo.type === 'country') {
+      for (let geonameId in locationData) {
+        let countryInfo = formatCountry(locationData[geonameId])
+        if (countryInfo.country.code !== '') {
+          let key = path.join('db', 'geonames', 'country', countryInfo.country.code.toLowerCase())
+          uploads.push(createFile(countryInfo, key))
+        }
+      }
+    }
   }
 
   let tempDir = path.join('/tmp', Date.now().toString())
@@ -48,7 +58,6 @@ module.exports.handler = async (event, context) => {
   console.log(dbEdition + ' saved to disk: ' + csvFilePath)
   let dbPartitions = await generateDB(csvFilePath, dbInfo, locationData)
   console.log(dbEdition + ' converted to JSON')
-  let uploads = []
   for (let i = 0; i < dbPartitions.length; i++) {
     let file = dbPartitions[i] + '.gz'
     let filename = path.basename(file)
@@ -238,18 +247,26 @@ const parseCountry = (jsonObj, countryData) => {
   jsonObj = parseNetwork(jsonObj)
   let location = countryData[jsonObj.geoname_id]
   if (location) {
-    jsonObj.data.continent = {
-      code: location.continent_code,
-      name: location.continent_name
-    }
-    jsonObj.data.country = {
-      code: location.country_iso_code,
-      name: location.country_name,
-      is_eu: location.is_in_european_union
-    }
+    let locationData = formatCountry(location)
+    jsonObj.data.continent = locationData.continent
+    jsonObj.data.country = locationData.country
   }
   jsonObj = cleanGeoname(jsonObj)
   return jsonObj
+}
+
+const formatCountry = (location) => {
+  return {
+    country: {
+      code: location.country_iso_code,
+      name: location.country_name,
+      is_eu: location.is_in_european_union
+    },
+    continent: {
+      code: location.continent_code,
+      name: location.continent_name
+    }
+  }
 }
 
 const parseCity = (jsonObj, cityData) => {
@@ -317,6 +334,18 @@ const upload = (file, key) => {
     StorageClass: 'STANDARD'
   }
   return s3.upload(params).promise().then((data) => {
+    return data.Key
+  })
+}
+
+const createFile = (content, key) => {
+  let params = {
+    Key: key,
+    Body: JSON.stringify(content),
+    ContentType: 'application/json',
+    StorageClass: 'STANDARD'
+  }
+  return s3.putObject(params).promise().then((data) => {
     return data.Key
   })
 }

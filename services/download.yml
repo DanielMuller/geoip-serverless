@@ -3,13 +3,7 @@ name: ${self:service}-download
 memorySize: 1024
 timeout: 300
 events: ${file(config/download-schedules.yml)}
-package:
-  include:
-    - services/download.js
-    - node_modules/**
-    - "!node_modules/**/*.md"
-    - "!node_modules/**/test/**"
-    - "!node_modules/**/tests/**"
+
 properties:
   logGroup:
     RetentionInDays: ${self:custom.stage.lambda.logRetention}

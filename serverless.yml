@@ -13,11 +13,10 @@ custom:
       - x-api-key
 
 plugins:
+  - serverless-webpack
   - serverless-api-cloudfront
 package:
   individually: true
-  exclude:
-    - "*/**"
 
 provider:
   name: aws

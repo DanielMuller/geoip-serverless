@@ -8,13 +8,7 @@ events:
       event: s3:ObjectCreated:*
       rules:
         - suffix: manifest.json
-package:
-  include:
-    - services/prepare.js
-    - node_modules/**
-    - "!node_modules/**/*.md"
-    - "!node_modules/**/test/**"
-    - "!node_modules/**/tests/**"
+
 properties:
   logGroup:
     RetentionInDays: ${self:custom.stage.lambda.logRetention}

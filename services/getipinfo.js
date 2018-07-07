@@ -40,8 +40,15 @@ module.exports.handler = async (event) => {
   let data = {}
   if (dbType === '') {
     data = await getEntry(networkHead, ipLong, dbMapping['city'])
+    if (data === null) {
+      return invalidContent('IP not found', 404)
+    }
     let asn = await getEntry(networkHead, ipLong, dbMapping['asn'])
-    data['data']['asn'] = asn['data']
+    if (asn === null) {
+      data['data']['asn'] = {}
+    } else {
+      data['data']['asn'] = asn['data']
+    }
     if ('valid_until' in data && 'valid_until' in asn) {
       data['valid_until'] = Math.min(data['valid_until'], asn['valid_until'])
     } else if ('valid_until' in asn) {
@@ -84,6 +91,7 @@ module.exports.handler = async (event) => {
       body: JSON.stringify(data['data']),
       headers: headers
     }
+    console.log('Response:', JSON.stringify(response, null, 2))
     return response
   } else {
     return invalidContent('IP not found', 404)
@@ -121,12 +129,15 @@ const s3Select = async (params) => {
     let record = {}
     s3.selectObjectContent(params, (err, data) => {
       if (err) {
-        reject(new Error(err))
+        resolve(null)
+        return null
       }
       let eventStream = data.Payload
       eventStream.on('data', function (event) {
         if (event.Records) {
-          record = JSON.parse(event.Records.Payload.toString())
+          if (event.Records.Payload) {
+            record = JSON.parse(event.Records.Payload.toString())
+          }
         }
       })
       eventStream.on('error', function (err) { console.log('err', err) })

@@ -52,7 +52,7 @@ module.exports.handler = async (event) => {
   } else {
     let dbPath = ''
     try {
-      dbPath = dbMapping['dbType']
+      dbPath = dbMapping[dbType]
     } catch (error) {
       dbPath = ''
     }

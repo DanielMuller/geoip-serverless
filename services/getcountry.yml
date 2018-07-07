@@ -1,0 +1,14 @@
+handler: services/getcountry.handler
+name: ${self:service}-getCountry
+memorySize: 128
+timeout: 10
+
+events:
+  - http:
+      path: /country/{code}
+      method: get
+      private: true
+
+properties:
+  logGroup:
+    RetentionInDays: ${self:custom.stage.lambda.logRetention}

@@ -334,7 +334,7 @@ const nextThursday = () => {
 // We cache until the 5th, which will always be after Tuesday
 const firstThursday = () => {
   let d = new Date()
-  if (d.getUTCDate() > 5) {
+  if (d.getUTCDate() >= 5) {
     d.setUTCMonth(d.getUTCMonth() + 1)
   }
   d.setUTCDate(5)

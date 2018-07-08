@@ -44,7 +44,7 @@ module.exports.handler = async (event, context) => {
       for (let geonameId in locationData) {
         let countryInfo = formatCountry(locationData[geonameId])
         if (countryInfo.country.code !== '') {
-          let key = path.join('db', 'geonames', 'country', countryInfo.country.code.toLowerCase())
+          let key = path.join(dataPath, 'db', 'geonames', 'country', countryInfo.country.code.toLowerCase())
           uploads.push(createFile(countryInfo, key))
         }
       }

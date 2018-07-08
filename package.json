@@ -1,7 +1,7 @@
 {
-  "name": "geoip-serverless-try2",
+  "name": "geoip-serverless",
   "version": "0.0.1",
-  "description": "Change name and description",
+  "description": "Serverless GeoIP API based on Maxmind's data",
   "main": "handler.js",
   "scripts": {
     "test": "npm run lint",

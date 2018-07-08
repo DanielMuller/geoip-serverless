@@ -34,6 +34,7 @@ nvm use
 npm i
 cp -a stages/sample.production.yml stages/production.yml
 cp -a config/sample.download-schedules.yml config/download-schedules.yml
+cp -a config/sample.airports-download-schedules.yml config/airports-download-schedules.yml
 cp -a config/sample.apiusage.yml config/apiusage.yml
 aws --profile production ssm put-parameter --name maxmindToken --value YourMaxminfToken --type SecureString
 # Edit yml files to suite your needs

@@ -1,0 +1,12 @@
+handler: services/airports/download.handler
+name: ${self:service}-airports-download
+memorySize: 1024
+timeout: 300
+events: ${file(config/airports-download-schedules.yml)}
+environment:
+  dataBucket: ${self:custom.stage.dataBucket}
+  dataPath: ${self:custom.stage.dataPath}
+
+properties:
+  logGroup:
+    RetentionInDays: ${self:custom.stage.lambda.logRetention}

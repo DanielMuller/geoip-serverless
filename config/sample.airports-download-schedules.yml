@@ -1,0 +1,5 @@
+- schedule:
+    name: airports
+    description: "Airports codes monthly"
+    rate: cron(30 5 10 * ? *)
+    enabled: true

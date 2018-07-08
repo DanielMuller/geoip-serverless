@@ -37,13 +37,13 @@ cp -a config/sample.download-schedules.yml config/download-schedules.yml
 cp -a config/sample.apiusage.yml config/apiusage.yml
 aws --profile production ssm put-parameter --name maxmindToken --value YourMaxminfToken --type SecureString
 # Edit yml files to suite your needs
-sls -s production deploy
+npm run deploy
 # Update manually Route53 to point to the newly created distribution
 
 # Trigger a first time download
-sls -s production invoke -f Download -p events/GeoLite2-ASN.json
-sls -s production invoke -f Download -p events/GeoLite2-City.json
-sls -s production invoke -f Download -p events/GeoLite2-Country.json
+./node_modules/.bin/sls -s production invoke -f Download -p events/GeoLite2-ASN.json
+./node_modules/.bin/sls -s production invoke -f Download -p events/GeoLite2-City.json
+./node_modules/.bin/sls -s production invoke -f Download -p events/GeoLite2-Country.json
 ```
 ### Database updates
 Updates are run through Cloudwatch schedules events. You can change download times in `config/download-schedules.yml`

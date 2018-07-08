@@ -23,7 +23,7 @@ curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ipv4/8.8.8.8/asn
 ```
 *Country Name from country code*
 ```
-curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/sg/us
+curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/country/us
 ```
 ## Install
 A working [serverless.com](https://serverless.com), nvm, aws-cli is needed.

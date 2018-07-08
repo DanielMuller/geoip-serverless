@@ -38,6 +38,7 @@ cp -a config/sample.airports-download-schedules.yml config/airports-download-sch
 cp -a config/sample.apiusage.yml config/apiusage.yml
 aws --profile production ssm put-parameter --name maxmindToken --value YourMaxminfToken --type SecureString
 # Edit yml files to suite your needs
+# countryApiKey needs to be a valid key. It can only be known after the application was deployed at least once
 npm run deploy
 # Update manually Route53 to point to the newly created distribution
 
@@ -76,6 +77,10 @@ Triggered from api-gateway.
 ### AirportsDownload
 Triggered from Cloudwatch scheduled event.
 - Fetches the list of airport codes and stores the ones with a valid IATA code
+
+### CloudfrontEdgesPrepare
+Triggered from S3PutObject event on aiport codes.
+- Convert airport codes to Cloudfront Edges informations
 
 ## Resources
 ### ApiGateway

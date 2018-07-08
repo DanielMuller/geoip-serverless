@@ -1,0 +1,19 @@
+handler: services/cloudfrontEdges/prepare.handler
+name: ${self:service}-cloudfrontEdges-prepare
+memorySize: 1024
+timeout: 300
+events:
+  - s3:
+      bucket: ${self:custom.stage.dataBucket}
+      event: s3:ObjectCreated:*
+      rules:
+        - suffix: src/airports/iata_codes.json.gz
+environment:
+  dataBucket: ${self:custom.stage.dataBucket}
+  dataPath: ${self:custom.stage.dataPath}
+  countryApiDomain: ${self:custom.stage.domainName}
+  countryApiKey: ${self:custom.stage.countryApiKey}
+  
+properties:
+  logGroup:
+    RetentionInDays: ${self:custom.stage.lambda.logRetention}

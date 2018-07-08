@@ -1,0 +1,17 @@
+handler: services/cloudfrontEdges/getedgeinfo.handler
+name: ${self:service}-cloudfrontEdges-getEdgeInfo
+memorySize: 128
+timeout: 10
+
+events:
+  - http:
+      path: /edge/{code}
+      method: get
+      private: true
+environment:
+  dataBucket: ${self:custom.stage.dataBucket}
+  dataPath: ${self:custom.stage.dataPath}
+
+properties:
+  logGroup:
+    RetentionInDays: ${self:custom.stage.lambda.logRetention}

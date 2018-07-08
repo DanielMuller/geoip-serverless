@@ -25,6 +25,10 @@ curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ipv4/8.8.8.8/asn
 ```
 curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/country/us
 ```
+*Cloudfront Edge info from edge code*
+```
+curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/edge/NRT52
+```
 ## Install
 A working [serverless.com](https://serverless.com), nvm, aws-cli is needed.
 ```

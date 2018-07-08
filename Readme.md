@@ -73,6 +73,10 @@ Triggered from S3PutObject event.
 Triggered from api-gateway.
 - Fetches the relevant row using S3-Select from the relevant database and partition
 
+### AirportsDownload
+Triggered from Cloudwatch scheduled event.
+- Fetches the list of airport codes and stores the ones with a valid IATA code
+
 ## Resources
 ### ApiGateway
 API Gateway is a local gateway, access is granted using `x-api-key` header.

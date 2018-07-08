@@ -24,7 +24,12 @@ module.exports.handler = async (event, context, callback) => {
   console.log('Event:', JSON.stringify(event))
   var db = event.editionId
   let licence = await decrypt(encryptedLicence)
-  let url = 'https://download.maxmind.com/app/geoip_download?edition_id=' + db + '-CSV&suffix=zip&license_key=' + licence
+  let url = ''
+  if (/^GeoLite2-/.test(db)) {
+    url = 'https://geolite.maxmind.com/download/geoip/database/' + db + '-CSV.zip'
+  } else {
+    url = 'https://download.maxmind.com/app/geoip_download?edition_id=' + db + '-CSV&suffix=zip&license_key=' + licence
+  }
   let tmpFolder = path.join('/tmp', Date.now().toString())
   fs.mkdirSync(tmpFolder)
 

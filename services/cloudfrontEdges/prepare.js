@@ -2,7 +2,6 @@
 
 const path = require('path')
 const zlib = require('zlib')
-const https = require('https')
 const AWS = require('aws-sdk')
 const s3 = new AWS.S3({
   region: process.env.AWS_REGION,
@@ -11,6 +10,8 @@ const s3 = new AWS.S3({
   }
 })
 const dataPath = process.env.dataPath
+const country = require('../lib/country')(dataPath)
+
 const continents = {
   'eu': 'Europe',
   'na': 'North-America',
@@ -162,29 +163,8 @@ const parseCodes = async (codes) => {
 }
 
 const getCountry = async (code) => {
-  return new Promise((resolve, reject) => {
-    let options = {
-      host: process.env.countryApiDomain,
-      path: '/country/' + code,
-      headers: {
-        'x-api-key': process.env.countryApiKey
-      }
-    }
-    let rawData = ''
-    https.get(options, (res) => {
-      res.on('data', (chunk) => {
-        rawData += chunk
-      })
-      res.on('end', () => {
-        let parsedData = JSON.parse(rawData)
-        resolve(parsedData.country.name)
-        return parsedData.country.name
-      })
-    }).on('error', (e) => {
-      console.error(e)
-      reject(e)
-    })
-  })
+  let countryInfo = await country.getInfo(code)
+  return countryInfo.country.name
 }
 
 const addEdges = (edges) => {

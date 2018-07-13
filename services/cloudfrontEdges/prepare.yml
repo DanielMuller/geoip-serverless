@@ -11,8 +11,6 @@ events:
 environment:
   dataBucket: ${self:custom.stage.dataBucket}
   dataPath: ${self:custom.stage.dataPath}
-  countryApiDomain: ${self:custom.stage.domainName}
-  countryApiKey: ${self:custom.stage.countryApiKey}
   
 properties:
   logGroup:

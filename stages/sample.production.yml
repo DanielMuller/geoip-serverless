@@ -1,7 +1,6 @@
 profile: prod
 region: ap-southeast-1
 domainName: ipinfo.example.com
-countryApiKey: xxxx
 certificateArn: arn:aws:acm:us-east-1:888888888:certificate/727cc728-9ecc-48a8-a6af-270f98d4cfba
 dataBucket: myprodbucket
 dataPath: ''

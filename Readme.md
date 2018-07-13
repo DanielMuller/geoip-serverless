@@ -29,6 +29,20 @@ curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/country/us
 ```
 curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/edge/NRT52
 ```
+*Caller IP infos*
+
+Just the IP as text
+
+```
+curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ifconfig
+```
+
+IP with ASN, Country and City informations
+
+```
+curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ifconfig/detail
+```
+
 ## Install
 A working [serverless.com](https://serverless.com), nvm, aws-cli is needed.
 ```

@@ -1,0 +1,17 @@
+handler: services/ifconfig/detail.handler
+name: ${self:service}-ifConfigDetail
+memorySize: 128
+timeout: 10
+
+events:
+  - http:
+      path: /ifconfig/detail
+      method: get
+      private: true
+environment:
+  countryApiDomain: ${self:custom.stage.domainName}
+  countryApiKey: ${self:custom.stage.countryApiKey}
+
+properties:
+  logGroup:
+    RetentionInDays: ${self:custom.stage.lambda.logRetention}

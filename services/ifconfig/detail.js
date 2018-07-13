@@ -3,7 +3,7 @@
 const https = require('https')
 
 module.exports.handler = async (event) => {
-  console.log(JSON.stringify(event))
+  console.log('Event received:', JSON.stringify(event))
   let myIp = event.requestContext.identity.sourceIp
   let country = await getInfo(myIp, 'country')
   let city = await getInfo(myIp, 'city')

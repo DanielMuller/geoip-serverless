@@ -40,6 +40,7 @@ const getInfo = async (ip, db) => {
         rawData += chunk
       })
       res.on('end', () => {
+        resolve(JSON.parse(rawData))
         return JSON.parse(rawData)
       })
     }).on('error', (e) => {

@@ -1,18 +1,30 @@
 'use strict'
 
-const https = require('https')
+const ipData = require('../../lib/ipinfo.js')
 
 module.exports.handler = async (event) => {
   console.log('Event received:', JSON.stringify(event))
   let myIp = event.requestContext.identity.sourceIp
-  let country = await getInfo(myIp, 'country')
-  let city = await getInfo(myIp, 'city')
-  let asn = await getInfo(myIp, 'asn')
+  let countryData = await ipData.getInfo(myIp, 'country')
+  let country = {}
+  if (countryData.statusCode === 200) {
+    country = countryData.ipInfo
+  }
+  let cityData = await ipData.getInfo(myIp, 'city')
+  let city = {}
+  if (cityData.statusCode === 200) {
+    city = cityData.ipInfo
+  }
+  let asn = {}
+  let asnData = await ipData.getInfo(myIp, 'asn')
+  if (asnData.statusCode === 200) {
+    asn = asnData.ipInfo
+  }
   let info = {
     myIp: myIp,
     country: country,
-    asn: asn,
-    city: city
+    city: city,
+    asn: asn
   }
   let headers = {
     'Cache-Control': 'max-age:0'
@@ -24,29 +36,4 @@ module.exports.handler = async (event) => {
   }
   console.log(JSON.stringify(response, null, 2))
   return response
-}
-
-const getInfo = async (ip, db) => {
-  return new Promise((resolve, reject) => {
-    let options = {
-      host: process.env.countryApiDomain,
-      path: '/ipv4/' + ip + '/' + db,
-      headers: {
-        'x-api-key': process.env.countryApiKey
-      }
-    }
-    let rawData = ''
-    https.get(options, (res) => {
-      res.on('data', (chunk) => {
-        rawData += chunk
-      })
-      res.on('end', () => {
-        resolve(JSON.parse(rawData))
-        return JSON.parse(rawData)
-      })
-    }).on('error', (e) => {
-      console.error(e)
-      reject(e)
-    })
-  })
 }

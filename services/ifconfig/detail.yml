@@ -8,9 +8,6 @@ events:
       path: /ifconfig/detail
       method: get
       private: true
-environment:
-  countryApiDomain: ${self:custom.stage.domainName}
-  countryApiKey: ${self:custom.stage.countryApiKey}
 
 properties:
   logGroup:

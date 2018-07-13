@@ -18,7 +18,7 @@ module.exports.handler = async (event) => {
   }
   let response = {
     statusCode: 200,
-    body: info,
+    body: JSON.stringify(info),
     headers: headers
   }
   console.log(JSON.stringify(response, null, 2))

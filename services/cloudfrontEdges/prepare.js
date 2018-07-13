@@ -10,7 +10,7 @@ const s3 = new AWS.S3({
   }
 })
 const dataPath = process.env.dataPath
-const country = require('../lib/country')(dataPath)
+const country = require('../../lib/country')(dataPath)
 
 const continents = {
   'eu': 'Europe',

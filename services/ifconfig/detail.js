@@ -9,6 +9,7 @@ module.exports.handler = async (event) => {
   let city = await getInfo(myIp, 'city')
   let asn = await getInfo(myIp, 'asn')
   let info = {
+    myIp: myIp,
     country: country,
     asn: asn,
     city: city

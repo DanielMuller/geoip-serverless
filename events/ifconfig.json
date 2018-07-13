@@ -1,0 +1,50 @@
+{
+  "resource": "/ifconfig/detail",
+  "path": "/ifconfig/detail",
+  "httpMethod": "GET",
+  "headers": {
+    "Host": "befkk3ba33.execute-api.ap-southeast-1.amazonaws.com",
+    "User-Agent": "Amazon CloudFront",
+    "Via": "2.0 af70784b6b43d4801d09b1c1699dc86a.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Id": "wEHbl0LZXi6ZXhaxupcGoPrdvkyOUOuFI41MI01fujWxC-YlU-BxrQ==",
+    "X-Amzn-Trace-Id": "Root=1-5b488c16-ed82db3960da3a6a3409179c",
+    "x-api-key": "qIGVL2Nfm02SpeYIFyp7ji2N4apSKjkOlAxQ2Tg0",
+    "X-Forwarded-For": "202.83.104.44, 13.228.69.235",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "rmbii3",
+    "resourcePath": "/ifconfig/detail",
+    "httpMethod": "GET",
+    "extendedRequestId": "J9rTfGgoSQ0Fuxw=",
+    "requestTime": "13/Jul/2018:11:25:10 +0000",
+    "path": "/production/ifconfig/detail",
+    "accountId": "024749985657",
+    "protocol": "HTTP/1.1",
+    "stage": "production",
+    "requestTimeEpoch": 1531481110323,
+    "requestId": "671d783f-868f-11e8-a551-4b07f42403fe",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "cognitoIdentityId": null,
+      "apiKey": "qIGVL2Nfm02SpeYIFyp7ji2N4apSKjkOlAxQ2Tg0",
+      "cognitoAuthenticationType": null,
+      "userArn": null,
+      "apiKeyId": "yc4fj7s6k1",
+      "userAgent": "Amazon CloudFront",
+      "accountId": null,
+      "caller": null,
+      "sourceIp": "202.83.104.44",
+      "accessKey": null,
+      "cognitoAuthenticationProvider": null,
+      "user": null
+    },
+    "apiId": "befkk3ba33"
+  },
+  "body": null,
+  "isBase64Encoded": false
+}

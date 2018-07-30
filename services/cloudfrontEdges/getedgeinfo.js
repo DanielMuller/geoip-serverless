@@ -12,7 +12,7 @@ const zlib = require('zlib')
 
 module.exports.handler = async (event) => {
   let edgeName = event['pathParameters']['code'].toLowerCase()
-  if (!/^[a-z]{3}[0-9]?[0-9]?$/.test(edgeName)) {
+  if (!/^[a-z]{3}[0-9]?[0-9]?(-.+)?$/.test(edgeName)) {
     return invalidContent('Invalid Edge', 400)
   }
   let shardId = edgeName.substring(0, 1)

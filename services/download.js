@@ -51,7 +51,7 @@ module.exports.handler = async (event, context, callback) => {
           let isLang = path.basename(entryName).indexOf('-Locations-' + locale) > -1
           if (isCSV && (isIPv4 || isLang)) {
             zip.extractEntryTo(entryName, tmpFolder, false, true)
-            let file = path.join(tmpFolder, zipEntry.name)
+            let file = path.join(tmpFolder, tmpFolder, zipEntry.name) // Dirty fix to overvome a bug in adm-zip 0.4.11
             console.log(dataPath, db)
             let key = path.join(dataPath, 'src', db, path.basename(file))
             console.log('upload to s3://' + process.env.dataBucket + '/' + key)

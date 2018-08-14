@@ -38,7 +38,7 @@ module.exports.handler = async (event) => {
     statusCode: 200,
     body: JSON.stringify(data),
     headers: {
-      'Cache-Control': 'max-age: 2628000'
+      'Cache-Control': 'max-age=2628000'
     }
   }
   console.log('Response:', JSON.stringify(data, null, 2))

@@ -27,7 +27,7 @@ module.exports.handler = async (event) => {
     asn: asn
   }
   let headers = {
-    'Cache-Control': 'max-age:0'
+    'Cache-Control': 'max-age=0'
   }
   let response = {
     statusCode: 200,

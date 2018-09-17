@@ -173,7 +173,8 @@ const generateDB = (csvFilePath, dbInfo, locationData) => {
     let previousFileId = -1
     csv()
       .fromStream(csvFileStream)
-      .on('json', (jsonObj) => {
+      .on('data', (data) => {
+        let jsonObj = JSON.parse(data.toString('utf8'))
         if (dbPrice === 'free') {
           jsonObj.valid_until = firstThursday()
         } else {

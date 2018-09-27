@@ -173,7 +173,13 @@ const parseCodes = async (codes) => {
 
 const getCountry = async (code) => {
   let countryInfo = await country.getInfo(code)
-  return countryInfo.country.name
+  let countryName = ''
+  try {
+    countryName = countryInfo.country.name
+  } catch (err) {
+    console.log(err)
+  }
+  return countryName
 }
 
 const addEdges = (edges) => {

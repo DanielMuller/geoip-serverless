@@ -99,6 +99,15 @@ const cloudfrontEdges = {
       lat: 37.3639,
       lon: 121.9298
     }
+  },
+  yto: {
+    city: 'Torronto',
+    region: 'Canada',
+    continent: 'North-America',
+    location: {
+      lat: 43.676667,
+      lon: -79.630556
+    }
   }
 }
 module.exports.handler = async (event, context) => {

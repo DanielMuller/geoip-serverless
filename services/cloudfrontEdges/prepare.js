@@ -110,6 +110,10 @@ const cloudfrontEdges = {
     }
   }
 }
+
+const cityOverride = {
+  fjr: 'Fujairah'
+}
 module.exports.handler = async (event, context) => {
   let bucket = event.Records[0].s3.bucket.name
   if (bucket !== process.env.dataBucket) {
@@ -157,6 +161,13 @@ const parseCodes = async (codes) => {
         countries[code.iso_country] = country
       }
       region = countries[code.iso_country]
+    }
+    if (code.municipality === '' || code.municipality === null) {
+      if (iata in cityOverride) {
+        code.municipality = cityOverride[iata]
+      } else {
+        code.municipality = iata
+      }
     }
     parsed[iata] = {
       city: code.municipality,

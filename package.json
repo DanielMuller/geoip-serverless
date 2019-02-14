@@ -33,7 +33,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "adm-zip": "0.4.7",
+    "adm-zip": "^0.4.13",
     "csvjson": "^5.1.0",
     "csvtojson": "^2.0.8",
     "dateformat": "^3.0.3",

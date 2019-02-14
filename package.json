@@ -7,8 +7,8 @@
     "test": "npm run lint",
     "lint": "eslint .",
     "lintfix": "eslint --fix",
-    "deploy": "sls -s production deploy",
-    "dev": "sls deploy"
+    "deploy": "npm run lint && sls -s production deploy",
+    "dev": "npm run lint && sls deploy"
   },
   "author": "",
   "license": "ISC",

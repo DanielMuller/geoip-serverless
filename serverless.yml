@@ -11,6 +11,10 @@ custom:
     cookies: none
     headers:
       - x-api-key
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
 
 plugins:
   - serverless-webpack

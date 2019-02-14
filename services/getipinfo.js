@@ -20,7 +20,7 @@ module.exports.handler = async (event) => {
   } else {
     response = {
       statusCode: ipInfo.statusCode,
-      body: JSON.stringify({message: ipInfo.message}),
+      body: JSON.stringify({ message: ipInfo.message }),
       headers: {
         'Cache-Control': 'max-age=60'
       }

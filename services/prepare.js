@@ -98,7 +98,7 @@ const saveS3ToDisk = (key, filePath) => {
     file.on('close', function () {
       resolve(filePath)
     })
-    s3.getObject({Key: key}).createReadStream().on('error', (err) => {
+    s3.getObject({ Key: key }).createReadStream().on('error', (err) => {
       console.log(err)
       reject(err)
     }).pipe(file)

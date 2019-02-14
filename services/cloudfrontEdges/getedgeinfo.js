@@ -46,7 +46,7 @@ module.exports.handler = async (event) => {
 }
 
 const getShard = async (key) => {
-  return s3.getObject({Key: key}).promise().then((data) => {
+  return s3.getObject({ Key: key }).promise().then((data) => {
     return JSON.parse(zlib.gunzipSync(data.Body))
   }).catch((err) => {
     if (err) {

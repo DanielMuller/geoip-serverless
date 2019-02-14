@@ -137,7 +137,7 @@ module.exports.handler = async (event, context) => {
 }
 
 const getRawCodes = async (dbFile) => {
-  return s3.getObject({Key: dbFile}).promise().then(data => {
+  return s3.getObject({ Key: dbFile }).promise().then(data => {
     return JSON.parse(zlib.gunzipSync(data.Body))
   })
 }

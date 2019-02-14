@@ -361,12 +361,10 @@ const nextThursday = () => {
 }
 
 // Maxminds geoLite2 updates every first Tuesday of the month
-// We cache until the 5th, which will always be after Tuesday
+// We cache until the 5th of next month, which will always be after Tuesday
 const firstThursday = () => {
   let d = new Date()
-  if (d.getUTCDate() >= 5) {
-    d.setUTCMonth(d.getUTCMonth() + 1)
-  }
+  d.setUTCMonth(d.getUTCMonth() + 1)
   d.setUTCDate(5)
   d.setUTCHours(12, 0, 0, 0)
   return Math.floor(d.getTime() / 1000)

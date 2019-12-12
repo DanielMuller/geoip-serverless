@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.7.5",
     "aws-sdk": "^2.588.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^8.0.6",

@@ -24,7 +24,7 @@ package:
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs12.x
   stage: dev
   region: ${opt:region, self:custom.stage.region}
   profile: ${self:custom.stage.profile}

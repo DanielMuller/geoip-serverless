@@ -1,8 +1,0 @@
-Type: AWS::ApiGateway::RestApi
-Properties:
-  Name: ${self:service}
-  Description: "Query IP info from s3-select. Managed by Serverless"
-  EndpointConfiguration:
-    Types:
-      - REGIONAL
-  ApiKeySourceType: HEADER

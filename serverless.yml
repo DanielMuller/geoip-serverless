@@ -41,8 +41,13 @@ provider:
     dbCity: ${self:custom.stage.dbMapping.city}
     dbCountry: ${self:custom.stage.dbMapping.country}
     dbAsn: ${self:custom.stage.dbMapping.asn}
+  apiName: ${self:service}
+  endpointType: regional
   apiKeys: ${file(config/apiusage.yml):apiKeys}
   usagePlan: ${file(config/apiusage.yml):usagePlan}
+  apiGateway:
+    description: "Query IP info from s3-select. Managed by Serverless"
+    apiKeySourceType: HEADER
 
 functions: ${file(lib/config.js):functions}
 resources:

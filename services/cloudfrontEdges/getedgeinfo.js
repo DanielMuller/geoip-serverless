@@ -11,15 +11,15 @@ const path = require('path')
 const zlib = require('zlib')
 
 module.exports.handler = async (event) => {
-  let edgeName = event['pathParameters']['code'].toLowerCase()
+  const edgeName = event.pathParameters.code.toLowerCase()
   if (!/^[a-z]{3}[0-9]?[0-9]?(-.+)?$/.test(edgeName)) {
     return invalidContent('Invalid Edge', 400)
   }
-  let shardId = edgeName.substring(0, 1)
-  let dataPath = process.env.dataPath
+  const shardId = edgeName.substring(0, 1)
+  const dataPath = process.env.dataPath
 
-  let key = path.join(dataPath, 'db', 'cloudfront', 'edges', shardId + '.json.gz')
-  let shard = await getShard(key)
+  const key = path.join(dataPath, 'db', 'cloudfront', 'edges', shardId + '.json.gz')
+  const shard = await getShard(key)
   if (shard === null) {
     return invalidContent('Shard not found', 404)
   }
@@ -34,7 +34,7 @@ module.exports.handler = async (event) => {
   if (data === null) {
     return invalidContent('Edge not found', 404)
   }
-  let response = {
+  const response = {
     statusCode: 200,
     body: JSON.stringify(data),
     headers: {
@@ -57,10 +57,10 @@ const getShard = async (key) => {
 }
 
 const invalidContent = (reason, code = 400) => {
-  let body = {
+  const body = {
     message: reason
   }
-  let response = {
+  const response = {
     statusCode: code,
     body: JSON.stringify(body),
     headers: {

@@ -4,8 +4,8 @@ const country = require('../lib/country')(process.env.dataPath)
 
 module.exports.handler = async (event) => {
   console.log('Event:', JSON.stringify(event))
-  let countryCode = event['pathParameters']['code'].toLowerCase()
-  let countryInfo = await country.getInfo(countryCode)
+  const countryCode = event.pathParameters.code.toLowerCase()
+  const countryInfo = await country.getInfo(countryCode)
 
   if (countryInfo === false) {
     return invalidContent('Invalid Country Code', 400)
@@ -13,7 +13,7 @@ module.exports.handler = async (event) => {
   if (countryInfo === '') {
     return invalidContent('Country not found', 404)
   }
-  let response = {
+  const response = {
     statusCode: 200,
     body: JSON.stringify(countryInfo),
     headers: {
@@ -25,10 +25,10 @@ module.exports.handler = async (event) => {
 }
 
 const invalidContent = (reason, code = 400) => {
-  let body = {
+  const body = {
     message: reason
   }
-  let response = {
+  const response = {
     statusCode: code,
     body: JSON.stringify(body),
     headers: {

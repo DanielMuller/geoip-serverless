@@ -1,11 +1,11 @@
 'use strict'
 
 module.exports.handler = (event, context, callback) => {
-  let myIp = event.requestContext.identity.sourceIp
-  let headers = {
+  const myIp = event.requestContext.identity.sourceIp
+  const headers = {
     'Content-Type': 'text/plain'
   }
-  let response = {
+  const response = {
     statusCode: 200,
     body: myIp,
     headers: headers

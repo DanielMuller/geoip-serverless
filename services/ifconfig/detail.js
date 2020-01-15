@@ -4,32 +4,32 @@ const ipData = require('../../lib/ipinfo.js')
 
 module.exports.handler = async (event) => {
   console.log('Event received:', JSON.stringify(event))
-  let myIp = event.requestContext.identity.sourceIp
-  let countryData = await ipData.getInfo(myIp, 'country')
+  const myIp = event.requestContext.identity.sourceIp
+  const countryData = await ipData.getInfo(myIp, 'country')
   let country = {}
   if (countryData.statusCode === 200) {
     country = countryData.ipInfo
   }
-  let cityData = await ipData.getInfo(myIp, 'city')
+  const cityData = await ipData.getInfo(myIp, 'city')
   let city = {}
   if (cityData.statusCode === 200) {
     city = cityData.ipInfo
   }
   let asn = {}
-  let asnData = await ipData.getInfo(myIp, 'asn')
+  const asnData = await ipData.getInfo(myIp, 'asn')
   if (asnData.statusCode === 200) {
     asn = asnData.ipInfo
   }
-  let info = {
+  const info = {
     myIp: myIp,
     country: country,
     city: city,
     asn: asn
   }
-  let headers = {
+  const headers = {
     'Cache-Control': 'max-age=0'
   }
-  let response = {
+  const response = {
     statusCode: 200,
     body: JSON.stringify(info),
     headers: headers

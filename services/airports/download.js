@@ -14,10 +14,10 @@ const zlib = require('zlib')
 const got = require('got')
 
 module.exports.handler = (event, context) => {
-  let url = 'https://datahub.io/core/airport-codes/r/airport-codes.json'
+  const url = 'https://datahub.io/core/airport-codes/r/airport-codes.json'
   return getCodes(url).then((codes) => {
     console.log('Received ' + codes.length + ' airport codes')
-    let params = {
+    const params = {
       Key: path.join(dataPath, 'src', 'airports', 'iata_codes.json.gz'),
       Body: zlib.gzipSync(JSON.stringify(codes)),
       ContentType: 'application/json',

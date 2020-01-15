@@ -23,17 +23,17 @@ const locale = process.env.locale.toLowerCase()
 module.exports.handler = async (event, context, callback) => {
   console.log('Event:', JSON.stringify(event))
   var db = event.editionId
-  let licence = await decrypt(encryptedLicence)
+  const licence = await decrypt(encryptedLicence)
   let url = ''
   if (/^GeoLite2-/.test(db)) {
     url = 'https://geolite.maxmind.com/download/geoip/database/' + db + '-CSV.zip'
   } else {
     url = 'https://download.maxmind.com/app/geoip_download?edition_id=' + db + '-CSV&suffix=zip&license_key=' + licence
   }
-  let tmpFolder = path.join('/tmp', Date.now().toString())
+  const tmpFolder = path.join('/tmp', Date.now().toString())
   fs.mkdirSync(tmpFolder)
 
-  let zipFile = path.join(tmpFolder, db + '.zip')
+  const zipFile = path.join(tmpFolder, db + '.zip')
   console.log('Start download: ' + db + ' to ' + zipFile)
   return new Promise((resolve, reject) => {
     https.get(url, (response) => {
@@ -43,18 +43,18 @@ module.exports.handler = async (event, context, callback) => {
       response.on('end', () => {
         var zip = new AdmZip(zipFile)
         var zipEntries = zip.getEntries()
-        let uploads = []
+        const uploads = []
         zipEntries.forEach((zipEntry) => {
-          let entryName = zipEntry.entryName
-          let isCSV = path.extname(entryName).toLowerCase() === '.csv'
-          let isIPv4 = path.basename(entryName).indexOf('Blocks-IPv4') > -1
-          let isLang = path.basename(entryName).indexOf('-Locations-' + locale) > -1
+          const entryName = zipEntry.entryName
+          const isCSV = path.extname(entryName).toLowerCase() === '.csv'
+          const isIPv4 = path.basename(entryName).indexOf('Blocks-IPv4') > -1
+          const isLang = path.basename(entryName).indexOf('-Locations-' + locale) > -1
           if (isCSV && (isIPv4 || isLang)) {
             zip.extractEntryTo(entryName, tmpFolder, false, true)
             // let file = path.join(tmpFolder, tmpFolder, zipEntry.name) // Dirty fix to overvome a bug in adm-zip 0.4.11
-            let file = path.join(tmpFolder, zipEntry.name) // For adm-zip 0.4.7
+            const file = path.join(tmpFolder, zipEntry.name) // For adm-zip 0.4.7
             console.log(dataPath, db)
-            let key = path.join(dataPath, 'src', db, path.basename(file))
+            const key = path.join(dataPath, 'src', db, path.basename(file))
             console.log('upload to s3://' + process.env.dataBucket + '/' + key)
             uploads.push(upload(file, key))
           }
@@ -62,8 +62,8 @@ module.exports.handler = async (event, context, callback) => {
         Promise.all(uploads).then((files) => {
           console.log('Content uploaded to S3: ' + JSON.stringify(files))
           rimraf.sync(tmpFolder)
-          let key = path.join(dataPath, 'src', db, 'manifest.json')
-          let params = {
+          const key = path.join(dataPath, 'src', db, 'manifest.json')
+          const params = {
             Body: JSON.stringify(files, null, 2),
             Key: key,
             ContentType: 'application/json',
@@ -84,15 +84,15 @@ const decrypt = async (key) => {
     Name: key,
     WithDecryption: true
   }
-  let data = await ssm.getParameter(params).promise()
+  const data = await ssm.getParameter(params).promise()
   return data.Parameter.Value
 }
 
 const upload = (file, key) => {
-  let gzkey = key + '.gz'
-  let body = fs.createReadStream(file).pipe(zlib.createGzip())
+  const gzkey = key + '.gz'
+  const body = fs.createReadStream(file).pipe(zlib.createGzip())
 
-  let params = {
+  const params = {
     Key: gzkey,
     Body: body,
     ContentType: 'application/x-gzip',

@@ -4,12 +4,12 @@ const ipData = require('../lib/ipinfo.js')
 
 module.exports.handler = async (event) => {
   console.log('Event:', JSON.stringify(event))
-  let ipRequest = event['pathParameters']['ip']
+  const ipRequest = event.pathParameters.ip
   let dbType = ''
-  if ('dbType' in event['pathParameters']) {
-    dbType = event['pathParameters']['dbType']
+  if ('dbType' in event.pathParameters) {
+    dbType = event.pathParameters.dbType
   }
-  let ipInfo = await ipData.getInfo(ipRequest, dbType)
+  const ipInfo = await ipData.getInfo(ipRequest, dbType)
   let response = {}
   if (ipInfo.statusCode === 200) {
     response = {

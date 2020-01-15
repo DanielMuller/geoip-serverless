@@ -18,50 +18,50 @@ const dataPath = process.env.dataPath
 const locale = process.env.locale
 
 module.exports.handler = async (event, context) => {
-  let bucket = event.Records[0].s3.bucket.name
+  const bucket = event.Records[0].s3.bucket.name
   if (bucket !== process.env.dataBucket) {
-    let error = new Error('Event bucket is different from dataBucket (' + bucket + ' !== ' + process.env.dataBucket + ')')
+    const error = new Error('Event bucket is different from dataBucket (' + bucket + ' !== ' + process.env.dataBucket + ')')
     return Promise.reject(error)
   }
-  let dbManifest = event.Records[0].s3.object.key
-  let dbEdition = getDbEdition(dbManifest)
+  const dbManifest = event.Records[0].s3.object.key
+  const dbEdition = getDbEdition(dbManifest)
   if (!dbEdition) {
-    let error = new Error('Unable to identify dbEdition in ' + dbManifest)
+    const error = new Error('Unable to identify dbEdition in ' + dbManifest)
     return Promise.reject(error)
   }
 
-  let manifest = await getS3Data(dbManifest)
-  let dbInfo = getDataFiles(manifest, dbEdition)
+  const manifest = await getS3Data(dbManifest)
+  const dbInfo = getDataFiles(manifest, dbEdition)
   if (!dbInfo.ranges) {
-    let error = new Error('No range file in ' + dbManifest)
+    const error = new Error('No range file in ' + dbManifest)
     return Promise.reject(error)
   }
-  let uploads = []
+  const uploads = []
   let locationData = null
   if (dbInfo.geonames) {
     locationData = await getLocationData(dbInfo.geonames)
     if (dbInfo.type === 'country') {
-      for (let geonameId in locationData) {
-        let countryInfo = formatCountry(locationData[geonameId])
+      for (const geonameId in locationData) {
+        const countryInfo = formatCountry(locationData[geonameId])
         if (countryInfo.country.code !== '') {
-          let key = path.join(dataPath, 'db', 'geonames', 'country', countryInfo.country.code.toLowerCase())
+          const key = path.join(dataPath, 'db', 'geonames', 'country', countryInfo.country.code.toLowerCase())
           uploads.push(createFile(countryInfo, key))
         }
       }
     }
   }
 
-  let tempDir = path.join('/tmp', Date.now().toString())
+  const tempDir = path.join('/tmp', Date.now().toString())
   fs.mkdirSync(tempDir)
-  let csvFilePath = path.join(tempDir, 'ranges.csv.gz')
+  const csvFilePath = path.join(tempDir, 'ranges.csv.gz')
   await saveS3ToDisk(dbInfo.ranges, csvFilePath)
   console.log(dbEdition + ' saved to disk: ' + csvFilePath)
-  let dbPartitions = await generateDB(csvFilePath, dbInfo, locationData)
+  const dbPartitions = await generateDB(csvFilePath, dbInfo, locationData)
   console.log(dbEdition + ' converted to JSON')
   for (let i = 0; i < dbPartitions.length; i++) {
-    let file = dbPartitions[i] + '.gz'
-    let filename = path.basename(file)
-    let key = path.join('db', dbEdition, filename)
+    const file = dbPartitions[i] + '.gz'
+    const filename = path.basename(file)
+    const key = path.join('db', dbEdition, filename)
     uploads.push(upload(file, key))
   }
   return Promise.all(uploads).then((files) => {
@@ -72,8 +72,8 @@ module.exports.handler = async (event, context) => {
 }
 
 const getDbEdition = (dbManifest) => {
-  let pattern = (path.join(dataPath, 'src/') + '([^/]+)/' + path.basename(dbManifest)).replace(/\//g, '\\/')
-  let match = dbManifest.match(pattern)
+  const pattern = (path.join(dataPath, 'src/') + '([^/]+)/' + path.basename(dbManifest)).replace(/\//g, '\\/')
+  const match = dbManifest.match(pattern)
   if (!match) {
     return false
   }
@@ -81,10 +81,10 @@ const getDbEdition = (dbManifest) => {
 }
 
 const getS3Data = async (key, compressed = false) => {
-  let params = {
+  const params = {
     Key: key
   }
-  let data = await s3.getObject(params).promise()
+  const data = await s3.getObject(params).promise()
   if (compressed) {
     return zlib.gunzipSync(data.Body).toString()
   } else {
@@ -94,7 +94,7 @@ const getS3Data = async (key, compressed = false) => {
 
 const saveS3ToDisk = (key, filePath) => {
   return new Promise((resolve, reject) => {
-    let file = fs.createWriteStream(filePath)
+    const file = fs.createWriteStream(filePath)
     file.on('close', function () {
       resolve(filePath)
     })
@@ -106,8 +106,8 @@ const saveS3ToDisk = (key, filePath) => {
 }
 
 const getDataFiles = (filesList, dbEdition) => {
-  let files = JSON.parse(filesList)
-  let dbData = {
+  const files = JSON.parse(filesList)
+  const dbData = {
     type: getDbType(dbEdition),
     price: getDbPrice(dbEdition),
     dbEdition: dbEdition,
@@ -128,7 +128,7 @@ const getDataFiles = (filesList, dbEdition) => {
 
 const getDbType = (dbEdition) => {
   let dbType = null
-  let match = dbEdition.toLowerCase().match(/^.*-([a-z]+)$/)
+  const match = dbEdition.toLowerCase().match(/^.*-([a-z]+)$/)
   if (match) {
     dbType = match[1]
   }
@@ -137,7 +137,7 @@ const getDbType = (dbEdition) => {
 
 const getDbPrice = (dbEdition) => {
   let dbPrice = 'paid'
-  let match = dbEdition.toLowerCase().match(/lite/i)
+  const match = dbEdition.toLowerCase().match(/lite/i)
   if (match) {
     dbPrice = 'free'
   }
@@ -145,13 +145,13 @@ const getDbPrice = (dbEdition) => {
 }
 
 const getLocationData = async (csvFilePath) => {
-  let data = await getS3Data(csvFilePath, true)
-  let jsonData = csvjson.toObject(data)
-  let result = {}
+  const data = await getS3Data(csvFilePath, true)
+  const jsonData = csvjson.toObject(data)
+  const result = {}
   for (let i = 0; i < jsonData.length; i++) {
-    let jsonObj = jsonData[i]
+    const jsonObj = jsonData[i]
     jsonObj.is_in_european_union = (jsonObj.is_in_european_union === '1')
-    let geonameId = jsonObj.geoname_id
+    const geonameId = jsonObj.geoname_id
     delete jsonObj.locale_code
     delete jsonObj.geoname_id
     result[geonameId] = jsonObj
@@ -165,16 +165,16 @@ const generateDB = (csvFilePath, dbInfo, locationData) => {
   return new Promise((resolve, reject) => {
     let result = ''
     let fileContent = ''
-    let csvFileFolder = path.dirname(csvFilePath)
-    let dbFolder = path.join(csvFileFolder, 'db')
-    let dbPartitions = []
+    const csvFileFolder = path.dirname(csvFilePath)
+    const dbFolder = path.join(csvFileFolder, 'db')
+    const dbPartitions = []
     fs.mkdirSync(dbFolder)
-    let csvFileStream = fs.createReadStream(csvFilePath).pipe(zlib.createGunzip())
+    const csvFileStream = fs.createReadStream(csvFilePath).pipe(zlib.createGunzip())
     let previousFileId = -1
     csv()
       .fromStream(csvFileStream)
       .on('data', (data) => {
-        let jsonObj = JSON.parse(data.toString('utf8'))
+        const jsonObj = JSON.parse(data.toString('utf8'))
         if (dbPrice === 'free') {
           jsonObj.valid_until = firstThursday()
         } else {
@@ -189,11 +189,11 @@ const generateDB = (csvFilePath, dbInfo, locationData) => {
         if (dbType === 'city') {
           result = parseCity(jsonObj, locationData)
         }
-        let fileId = result.network_head.toString()
-        let file = path.join(dbFolder, fileId)
-        let previousFile = path.join(dbFolder, previousFileId.toString())
+        const fileId = result.network_head.toString()
+        const file = path.join(dbFolder, fileId)
+        const previousFile = path.join(dbFolder, previousFileId.toString())
         if (previousFileId > -1 && previousFileId !== fileId) {
-          let input = Buffer.from(fileContent, 'utf-8')
+          const input = Buffer.from(fileContent, 'utf-8')
           fs.writeFileSync(previousFile + '.gz', zlib.gzipSync(input))
           fileContent = ''
         }
@@ -207,8 +207,8 @@ const generateDB = (csvFilePath, dbInfo, locationData) => {
         if (error) {
           reject(error)
         }
-        let previousFile = path.join(dbFolder, previousFileId.toString())
-        let input = Buffer.from(fileContent, 'utf-8')
+        const previousFile = path.join(dbFolder, previousFileId.toString())
+        const input = Buffer.from(fileContent, 'utf-8')
         fs.writeFileSync(previousFile + '.gz', zlib.gzipSync(input))
         fileContent = ''
         resolve(dbPartitions)
@@ -225,11 +225,11 @@ const clean = (jsonObj) => {
 }
 const parseNetwork = (jsonObj) => {
   jsonObj = clean(jsonObj)
-  let network = jsonObj.network
+  const network = jsonObj.network
   delete jsonObj.network
-  let subnet = ip.cidrSubnet(network)
-  let rangeStart = subnet.networkAddress
-  let rangeEnd = subnet.broadcastAddress
+  const subnet = ip.cidrSubnet(network)
+  const rangeStart = subnet.networkAddress
+  const rangeEnd = subnet.broadcastAddress
   jsonObj.network_head = parseInt(network.split('.')[0])
   jsonObj.network_range_start = ip.toLong(rangeStart)
   jsonObj.network_range_end = ip.toLong(rangeEnd)
@@ -246,9 +246,9 @@ const parseArn = (jsonObj) => {
 
 const parseCountry = (jsonObj, countryData) => {
   jsonObj = parseNetwork(jsonObj)
-  let location = countryData[jsonObj.geoname_id]
+  const location = countryData[jsonObj.geoname_id]
   if (location) {
-    let locationData = formatCountry(location)
+    const locationData = formatCountry(location)
     jsonObj.data.continent = locationData.continent
     jsonObj.data.country = locationData.country
   }
@@ -275,7 +275,7 @@ const parseCity = (jsonObj, cityData) => {
   jsonObj.latitude = parseFloat(jsonObj.latitude) || null
   jsonObj.longitude = parseFloat(jsonObj.longitude) || null
   jsonObj.accuracy_radius = parseInt(jsonObj.accuracy_radius) || null
-  let location = cityData[jsonObj.geoname_id]
+  const location = cityData[jsonObj.geoname_id]
   if (location) {
     jsonObj.data.continent = {
       code: location.continent_code,
@@ -326,9 +326,9 @@ const cleanGeoname = (jsonObj) => {
 }
 
 const upload = (file, key) => {
-  let stream = fs.createReadStream(file)
+  const stream = fs.createReadStream(file)
 
-  let params = {
+  const params = {
     Key: key,
     Body: stream,
     ContentType: 'application/x-gzip',
@@ -340,7 +340,7 @@ const upload = (file, key) => {
 }
 
 const createFile = (content, key) => {
-  let params = {
+  const params = {
     Key: key,
     Body: JSON.stringify(content),
     ContentType: 'application/json',
@@ -354,7 +354,7 @@ const createFile = (content, key) => {
 // Maxminds GeoIP2 is updated every Tuesday
 // We update source on Wednesday. Data is valid until next Thursday 12pm
 const nextThursday = () => {
-  let d = new Date()
+  const d = new Date()
   d.setUTCDate(d.getUTCDate() + (7 - d.getUTCDay()) % 7 + 4)
   d.setUTCHours(12, 0, 0, 0)
   return Math.floor(d.getTime() / 1000)
@@ -363,7 +363,7 @@ const nextThursday = () => {
 // Maxminds geoLite2 updates every first Tuesday of the month
 // We cache until the 5th of next month, which will always be after Tuesday
 const firstThursday = () => {
-  let d = new Date()
+  const d = new Date()
   d.setUTCMonth(d.getUTCMonth() + 1)
   d.setUTCDate(5)
   d.setUTCHours(12, 0, 0, 0)

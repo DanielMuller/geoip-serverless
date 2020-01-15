@@ -13,13 +13,13 @@ const dataPath = process.env.dataPath
 const country = require('../../lib/country')(dataPath)
 
 const continents = {
-  'eu': 'Europe',
-  'na': 'North-America',
-  'sa': 'South-America',
-  'as': 'Asia',
-  'oc': 'Oceania',
-  'af': 'Africa',
-  'an': 'Antartica'
+  eu: 'Europe',
+  na: 'North-America',
+  sa: 'South-America',
+  as: 'Asia',
+  oc: 'Oceania',
+  af: 'Africa',
+  an: 'Antartica'
 }
 const countries = {}
 const usStates = {
@@ -115,19 +115,19 @@ const cityOverride = {
   fjr: 'Fujairah'
 }
 module.exports.handler = async (event, context) => {
-  let bucket = event.Records[0].s3.bucket.name
+  const bucket = event.Records[0].s3.bucket.name
   if (bucket !== process.env.dataBucket) {
-    let error = new Error('Event bucket is different from dataBucket (' + bucket + ' !== ' + process.env.dataBucket + ')')
+    const error = new Error('Event bucket is different from dataBucket (' + bucket + ' !== ' + process.env.dataBucket + ')')
     return Promise.reject(error)
   }
-  let dbFile = event.Records[0].s3.object.key
-  let iataCodes = await getRawCodes(dbFile)
-  let parsedCodes = await parseCodes(iataCodes)
-  let edges = addEdges(parsedCodes)
-  let shardedEdges = shardEdges(edges)
-  let uploads = []
-  for (let shardId in shardedEdges) {
-    let key = path.join(dataPath, 'db', 'cloudfront', 'edges', shardId + '.json.gz')
+  const dbFile = event.Records[0].s3.object.key
+  const iataCodes = await getRawCodes(dbFile)
+  const parsedCodes = await parseCodes(iataCodes)
+  const edges = addEdges(parsedCodes)
+  const shardedEdges = shardEdges(edges)
+  const uploads = []
+  for (const shardId in shardedEdges) {
+    const key = path.join(dataPath, 'db', 'cloudfront', 'edges', shardId + '.json.gz')
     uploads.push(createFile(key, shardedEdges[shardId]))
   }
   return Promise.all(uploads).then((files) => {
@@ -143,21 +143,21 @@ const getRawCodes = async (dbFile) => {
 }
 
 const parseCodes = async (codes) => {
-  let parsed = {}
+  const parsed = {}
   for (let i = 0; i < codes.length; i++) {
-    let code = codes[i]
-    let iata = code.iata_code.toLowerCase()
+    const code = codes[i]
+    const iata = code.iata_code.toLowerCase()
     if (iata.length !== 3) {
       continue
     }
-    let coordinates = code.coordinates.split(',')
+    const coordinates = code.coordinates.split(',')
     // for US: iso_region
     let region = ''
     if (code.iso_country === 'US' && /^US-/.test(code.iso_region)) {
       region = usStates[code.iso_region]
     } else {
       if (!countries[code.iso_country]) {
-        let country = await getCountry(code.iso_country)
+        const country = await getCountry(code.iso_country)
         countries[code.iso_country] = country
       }
       region = countries[code.iso_country]
@@ -183,7 +183,7 @@ const parseCodes = async (codes) => {
 }
 
 const getCountry = async (code) => {
-  let countryInfo = await country.getInfo(code)
+  const countryInfo = await country.getInfo(code)
   let countryName = ''
   try {
     countryName = countryInfo.country.name
@@ -198,9 +198,9 @@ const addEdges = (edges) => {
 }
 
 const shardEdges = (edges) => {
-  let shards = {}
-  for (let edge in edges) {
-    let shardId = edge.substring(0, 1)
+  const shards = {}
+  for (const edge in edges) {
+    const shardId = edge.substring(0, 1)
     if (!(shardId in shards)) {
       shards[shardId] = {}
     }
@@ -210,7 +210,7 @@ const shardEdges = (edges) => {
 }
 
 const createFile = (key, content) => {
-  let params = {
+  const params = {
     Key: key,
     Body: zlib.gzipSync(JSON.stringify(content)),
     ContentType: 'application/json',

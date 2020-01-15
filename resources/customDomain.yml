@@ -1,0 +1,10 @@
+Type: AWS::Route53::RecordSetGroup
+Properties:
+  HostedZoneId: ${self:custom.stage.hostedZoneId}
+  RecordSets:
+  - Name: ${self:custom.stage.domainName}
+    Type: A
+    AliasTarget:
+      HostedZoneId: Z2FDTNDATAQYW2
+      DNSName:
+        Fn::GetAtt: [ApiDistribution, DomainName]

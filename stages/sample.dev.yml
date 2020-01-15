@@ -1,6 +1,7 @@
 profile: dev
 region: ap-southeast-1
 domainName: ipinfo.example.com
+hostedZoneId: myHostedZoneId
 certificateArn: arn:aws:acm:us-east-1:444444444444:certificate/af6836cc-b82d-4a93-a230-9bc371b40418
 dataBucket: mydevbucket
 dataPath: ''

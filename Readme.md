@@ -57,7 +57,6 @@ cp -a config/sample.apiusage.yml config/apiusage.yml
 aws --profile production ssm put-parameter --name maxmindToken --value YourMaxminfToken --type SecureString
 # Edit yml files to suite your needs
 npm run deploy
-# Update manually Route53 to point to the newly created distribution
 
 # Trigger a first time download
 ./node_modules/.bin/sls -s production invoke -f Download -p events/GeoLite2-ASN.json

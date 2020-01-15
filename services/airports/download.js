@@ -11,7 +11,14 @@ const s3 = new AWS.S3({
 const dataPath = process.env.dataPath
 const path = require('path')
 const zlib = require('zlib')
+const https = require('https')
 const got = require('got')
+const urlToOptions = require('got/dist/source/utils/url-to-options').default
+const gots = got.extend({
+  request: (url, options, callback) => {
+    return https.request({ ...options, ...urlToOptions(url) }, callback)
+  }
+})
 
 module.exports.handler = (event, context) => {
   const url = 'https://datahub.io/core/airport-codes/r/airport-codes.json'
@@ -29,10 +36,11 @@ module.exports.handler = (event, context) => {
 }
 
 const getCodes = (url) => {
-  return got(url)
+  return gots(url)
     .then((res) => {
       return iataOnly(JSON.parse(res.body))
     })
+    .catch(err => console.log(err))
 }
 
 const iataOnly = (data) => {

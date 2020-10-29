@@ -22,7 +22,7 @@ const locale = process.env.locale.toLowerCase()
 
 module.exports.handler = async (event, context, callback) => {
   console.log('Event:', JSON.stringify(event))
-  var db = event.editionId
+  const db = event.editionId
   const licence = await decrypt(encryptedLicence)
   const url = 'https://download.maxmind.com/app/geoip_download?edition_id=' + db + '-CSV&suffix=zip&license_key=' + licence
   const tmpFolder = path.join('/tmp', Date.now().toString())
@@ -36,8 +36,8 @@ module.exports.handler = async (event, context, callback) => {
         fs.appendFileSync(zipFile, data)
       })
       response.on('end', () => {
-        var zip = new AdmZip(zipFile)
-        var zipEntries = zip.getEntries()
+        const zip = new AdmZip(zipFile)
+        const zipEntries = zip.getEntries()
         const uploads = []
         zipEntries.forEach((zipEntry) => {
           const entryName = zipEntry.entryName
@@ -75,7 +75,7 @@ module.exports.handler = async (event, context, callback) => {
 }
 
 const decrypt = async (key) => {
-  var params = {
+  const params = {
     Name: key,
     WithDecryption: true
   }

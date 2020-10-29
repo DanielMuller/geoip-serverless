@@ -1,5 +1,5 @@
 service: geoip-serverless
-frameworkVersion: ">=1.26.1 <2.0.0"
+frameworkVersion: ">=2.0.0 <3.0.0"
 
 custom:
   stage: ${file(stages/${opt:stage, self:provider.stage}.yml)}

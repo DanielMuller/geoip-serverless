@@ -160,8 +160,8 @@ const getLocationData = async (csvFilePath) => {
 }
 
 const generateDB = (csvFilePath, dbInfo, locationData) => {
-  var dbType = dbInfo.type
-  var dbPrice = dbInfo.price
+  const dbType = dbInfo.type
+  const dbPrice = dbInfo.price
   return new Promise((resolve, reject) => {
     let result = ''
     let fileContent = ''

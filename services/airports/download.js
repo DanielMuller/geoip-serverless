@@ -13,7 +13,7 @@ const path = require('path')
 const zlib = require('zlib')
 const https = require('https')
 const got = require('got')
-const urlToOptions = require('got/dist/source/utils/url-to-options').default
+const urlToOptions = require('url-to-options')
 const gots = got.extend({
   request: (url, options, callback) => {
     return https.request({ ...options, ...urlToOptions(url) }, callback)

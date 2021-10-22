@@ -1,5 +1,6 @@
 service: geoip-serverless
 frameworkVersion: ">=2.0.0 <3.0.0"
+variablesResolutionMode: 20210326
 
 custom:
   stage: ${file(stages/${opt:stage, self:provider.stage}.yml)}
@@ -24,15 +25,17 @@ package:
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
   stage: dev
   region: ${opt:region, self:custom.stage.region}
   profile: ${self:custom.stage.profile}
   memorySize: ${self:custom.stage.lambda.memorySize}
   timeout: ${self:custom.stage.lambda.timeout}
   iamRoleStatements: ${file(config/iamRoleStatements.yml)}
+  logRetentionInDays: ${self:custom.stage.lambda.logRetention}
   deploymentBucket:
-    name: com.serverless.${self:custom.stage.profile}.${self:provider.region}.deploys
+    name: com.serverless.${aws:accountId}.${self:provider.region}.deploys
   environment:
     ssmMaxmindToken: ${self:custom.stage.ssmMaxmindTokenName}
     locale: ${self:custom.stage.locale}

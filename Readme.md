@@ -46,7 +46,7 @@ curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ifconfig/detail
 ## Install
 A working [serverless.com](https://serverless.com), nvm, aws-cli is needed.
 ```
-git clone https://github.com/Spuul/geoip-serverless
+git clone https://github.com/DanielMuller/geoip-serverless
 cd geoip-serverless
 nvm use
 npm i
@@ -59,16 +59,17 @@ aws --profile production ssm put-parameter --name maxmindToken --value YourMaxmi
 npm run deploy
 
 # Trigger a first time download
-./node_modules/.bin/sls -s production invoke -f Download -p events/GeoLite2-ASN.json
-./node_modules/.bin/sls -s production invoke -f Download -p events/GeoLite2-City.json
-./node_modules/.bin/sls -s production invoke -f Download -p events/GeoLite2-Country.json
+sls -s production invoke -f Download -p events/GeoLite2-ASN.json
+sls -s production invoke -f Download -p events/GeoLite2-City.json
+sls -s production invoke -f Download -p events/GeoLite2-Country.json
+sls -s production invoke -f AirportsDownload
 ```
 ### Database updates
 Updates are run through Cloudwatch schedules events. You can change download times in `config/download-schedules.yml`
 
 ## Modify
 ```
-git clone https://github.com/Spuul/geoip-serverless
+git clone https://github.com/DanielMuller/geoip-serverless
 cd geoip-serverless
 nvm use
 npm i

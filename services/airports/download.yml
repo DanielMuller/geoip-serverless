@@ -6,7 +6,3 @@ events: ${file(config/airports-download-schedules.yml)}
 environment:
   dataBucket: ${self:custom.stage.dataBucket}
   dataPath: ${self:custom.stage.dataPath}
-
-properties:
-  logGroup:
-    RetentionInDays: ${self:custom.stage.lambda.logRetention}

@@ -8,7 +8,3 @@ events:
       path: /country/{code}
       method: get
       private: true
-
-properties:
-  logGroup:
-    RetentionInDays: ${self:custom.stage.lambda.logRetention}

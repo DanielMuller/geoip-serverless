@@ -12,7 +12,3 @@ events:
       path: /ipv4/{ip}/{dbType}
       method: get
       private: true
-
-properties:
-  logGroup:
-    RetentionInDays: ${self:custom.stage.lambda.logRetention}

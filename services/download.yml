@@ -3,7 +3,3 @@ name: ${self:service}-download
 memorySize: 1024
 timeout: 300
 events: ${file(config/download-schedules.yml)}
-
-properties:
-  logGroup:
-    RetentionInDays: ${self:custom.stage.lambda.logRetention}

@@ -26,7 +26,7 @@
     "eslint-plugin-promise": "^5.1.1",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
-    "serverless": "^2.64.1",
+    "serverless": "^3.25.1",
     "serverless-api-cloudfront": "^0.9.5",
     "serverless-webpack": "^5.5.5",
     "webpack": "^5.59.1",

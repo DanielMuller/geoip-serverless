@@ -1,4 +1,13 @@
 # Serverless GeoIP API
+
+> [!WARNING]
+>
+> This project was created mainly to illustrate a use case for S3-Select.
+>
+> This project is no longer used in production and therefore isn't maintained anymore.
+>
+
+
 Serverless API to gather Geo Infos about IPs, using [Maxmind's](https://www.maxmind.com) databases (City, Country, ASN).
 
 This project provides a cost effective serverless GeoIP service, leveraging several AWS products:
@@ -43,8 +52,14 @@ IP with ASN, Country and City informations
 curl -H "x-api-key: xxxxxx" https://ipinfo.example.com/ifconfig/detail
 ```
 
+## Pre-requisites
+* A Domain hosted in Route53
+* An ACM certificate in us-east-1 configured for the domain you will use
+* nvm
+* aws-cli
+* A Maxmind License Key
+
 ## Install
-A working [serverless.com](https://serverless.com), nvm, aws-cli is needed.
 ```
 git clone https://github.com/DanielMuller/geoip-serverless
 cd geoip-serverless
@@ -54,15 +69,27 @@ cp -a stages/sample.production.yml stages/production.yml
 cp -a config/sample.download-schedules.yml config/download-schedules.yml
 cp -a config/sample.airports-download-schedules.yml config/airports-download-schedules.yml
 cp -a config/sample.apiusage.yml config/apiusage.yml
-aws --profile production ssm put-parameter --name maxmindToken --value YourMaxminfToken --type SecureString
+aws --profile production ssm put-parameter --name maxmindToken --value YourMaxmindToken --type SecureString
 # Edit yml files to suite your needs
+#   AWS Profile used by CLI
+#   Region to deploy to (same as your bucket)
+#   The domain name to be used
+#   Your domain's HostedZoneId
+#   Your Certificate ARN
+#   Your Bucket name
+#   The prefix to be used to store your data
 npm run deploy
+
+# Take note of the ApiKeys generated, you will need them to call the service
 
 # Trigger a first time download
 sls -s production invoke -f Download -p events/GeoLite2-ASN.json
 sls -s production invoke -f Download -p events/GeoLite2-City.json
 sls -s production invoke -f Download -p events/GeoLite2-Country.json
 sls -s production invoke -f AirportsDownload
+
+# Wait for 5 to 10 minutes to allow the background process to finish
+
 ```
 ### Database updates
 Updates are run through Cloudwatch schedules events. You can change download times in `config/download-schedules.yml`

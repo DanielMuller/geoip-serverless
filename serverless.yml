@@ -12,6 +12,7 @@ custom:
     cookies: none
     headers:
       - x-api-key
+    minimumProtocolVersion: TLSv1.2_2021
   webpack:
     includeModules:
       forceExclude:
